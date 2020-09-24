@@ -1,0 +1,10 @@
+.jumbotron{
+    background-image: url('img/jumbotron-asset.jpg');
+    background-size: cover;
+    box-shadow: inset 0 0 0 2000px rgba(122, 11, 12, 0.75);
+}
+
+#formation{
+    background-image: url('img/Soccer_Field_Transparant.jpg');
+    background-size: cover;
+}
