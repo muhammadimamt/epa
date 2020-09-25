@@ -21,10 +21,9 @@ let formations = [
 ];
 
 class MappingFormationPosition{
-    constructor(id, formationId, playerId, positionId){
+    constructor(id, formationId, positionId){
         this.id = id;
         this.formationId = formationId;
-        this.playerId = playerId;
         this.positionId = positionId;
     }
 }
