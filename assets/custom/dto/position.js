@@ -16,7 +16,6 @@ let positions = [
     new Position(7, "SW", "info"),
     new Position(8, "DMF", "success"),
     new Position(9, "CMF", "success"),
-    new Position(16, "SMF", "success"),
     new Position(10, "AMF", "success"),
     new Position(11, "LMF", "success"),
     new Position(12, "RMF", "success"),

@@ -27,7 +27,7 @@ let player = [
     new Player(14, "Abe", "2", 8),
     new Player(14, "Konno", "20", 8),
     new Player(14, "Hashimoto", "27", 9),
-    new Player(14, "Kagawa", "25", 16),
+    new Player(14, "Kagawa", "25", 9),
     new Player(14, "Honda", "19", 10),
     new Player(14, "Tamada", "11", 15),
     new Player(14, "T. Tanaka", "26", 15)
