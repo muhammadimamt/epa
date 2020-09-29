@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div id="pre-field"  class="container border d-none">
+    <div id="pre-field"  class="container border">
         <h3 class="display-4">
             Form Pertandingan
         </h3>
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label>Tim</label>
                     <select 
-                        class="js-select2 form-control" 
+                        class="js-select2 custom-control" 
                         style="width: 100%; height: 100%;" 
                         data-placeholder="Pilih tim">
                         <option value=""></option>
@@ -67,6 +67,33 @@
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label>Lawan</label>
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Tipe Pertandingan</label>
+                    <select class="custom-select">
+                        <option value="1">Persahabatan</option>
+                        <option value="2">Kompetisi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Home/Away</label>
+                    <select class="custom-select">
+                        <option value="1">Home</option>
+                        <option value="2">Away</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Lokasi Pertandingan</label>
                     <input type="text" class="form-control" />
                 </div>
             </div>
@@ -141,99 +168,172 @@
                 </div>
             </div>
         </div>
+
+        <h3> Hasil Pertandingan </h3>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Skor</label>
+                    <div class="row">
+                        <div class="col-md-2 col-5">
+                            <div class="form-group">
+                                <label>Tim</label>
+                                <input type="text" id="after-hour" class="form-control input-number-only" min="0"/>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-2 d-flex align-items-center justify-content-center">
+                            -
+                        </div>
+                        <div class="col-md-2 col-5">
+                            <div class="form-group">
+                                <label>Lawan</label>
+                                <input type="text" id="after-hour" class="form-control input-number-only" min="0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Catatan</label>
+                    <textarea style="resize: none;" class="form-control w-100"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 mr-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('post-field').classList.remove('d-none');">
+                Atur Formasi
+            </button>
+        </div>
     </div>
 
+    <div id="post-field" class="container border mt-3 d-none">
+        <h3 class="display-4">
+            Pencatatan Formasi
+        </h3>
 
-    <div id="post-field" class="container-fluid">
+        <br />
+
+
         <div class="row">
-            <div class="col-md-4">
-                <h4>Daftar Pemain</h4>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Formasi</label>
+                    <select id="formation-select" class="custom-select">
+                        <option value="0">--Pilih Formasi--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
-                <div id="player-slot" class="container overflow-auto simple-border" style="height: 300px;"></div>
-
-
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Anggota Tim</label>
+                    <div id="player-slot" class="container overflow-auto border" style="height: 330px;" ondragover="allowDropSubstitute(event)" ondrop="dropToSaveToDefault(event, id)">
+                
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>Pemain Cadangan</label>
+                    <div id="player-unselected-slot" ondragover="allowDropSubstitute(event)" ondrop="dropToSaveToSubstitute(event)" class="container overflow-auto border" style="height: 140px;"></div>
+                </div>
 
-                <div id="formation" class="container-fluid">
-                    <div class="row pt-3 d-flex justify-content-center">
+                <div class="form-group">
+                    <label>Tidak Hadir</label>
+                    <div id="player-not-attend-slot" ondragover="allowDropSubstitute(event)" ondrop="dropToNotAttend(event)" class="container overflow-auto border" style="height: 140px;"</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div id="formation" style="height: 700px;" class="container-fluid">
+
+                    <!-- First Row -->
+
+                    <div class="row pt-3 pb-3 d-flex justify-content-center">
                         <div>
-                            <div id="25" class="list-group-item list-group-item-dark">
-                                ST
+                            <div id="1" draggable="true" ondragstart="dragPlayer(event)" ondragend="dragPlayerEnd(this, 'GK');" ondragover="allowDropSubstitute(event)" ondrop="dropToChange(event, 1)" class="list-group-item list-group-item-dark">
+                                GK
                             </div>
                         </div>
                     </div>
 
                     <!-- Second Row -->
 
-                    <div class="row pt-3 d-flex justify-content-between mx-1">
+                    <div class="row pt-3 d-flex justify-content-center">
                         <div>
-                            <div id="24" class="list-group-item list-group-item-dark">
-                                LMF
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="23" class="list-group-item list-group-item-dark">
-                                CF
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <div id="22" class="list-group-item list-group-item-dark">
-                                CF
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="21" class="list-group-item list-group-item-dark">
-                                CF
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="20" class="list-group-item list-group-item-dark">
-                                RMF
+                            <div id="2" class="list-group-item list-group-item-dark">
+                                SW
                             </div>
                         </div>
                     </div>
 
                     <!-- Third Row -->
-
-                    <div class="row pt-3 d-flex justify-content-center">
+                    <div class="row pt-3 d-flex justify-content-between mx-1">
                         <div>
-                            <div id="19" class="list-group-item list-group-item-dark">
-                                SS
+                            <div id="7" class="list-group-item list-group-item-dark">
+                                LB
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="6" class="list-group-item list-group-item-dark">
+                                CB
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="5" class="list-group-item list-group-item-dark">
+                                CB
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="4" class="list-group-item list-group-item-dark">
+                                CB
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="3" class="list-group-item list-group-item-dark">
+                                RB
                             </div>
                         </div>
                     </div>
 
                     <!-- Fourth Row -->
-
                     <div class="row pt-3 d-flex justify-content-between mx-5">
                         <div>
-                            <div id="18" class="list-group-item list-group-item-dark">
-                                AMF
+                            <div id="10" class="list-group-item list-group-item-dark">
+                                DMF
                             </div>
                         </div>
 
                         <div>
-                            <div id="17" class="list-group-item list-group-item-dark">
-                                AMF
+                            <div id="9" class="list-group-item list-group-item-dark">
+                                DMF
                             </div>
                         </div>
 
                         <div>
-                            <div id="16" class="list-group-item list-group-item-dark">
-                                AMF
+                            <div id="8" class="list-group-item list-group-item-dark">
+                                DMF
                             </div>
                         </div>
                     </div>
 
                     <!-- Fifth Row -->
-
                     <div class="row pt-3 d-flex justify-content-between mx-1">
                         <div>
                             <div id="15" class="list-group-item list-group-item-dark">
@@ -267,104 +367,96 @@
                     </div>
 
                     <!-- Sixth Row -->
+
                     <div class="row pt-3 d-flex justify-content-between mx-5">
                         <div>
-                            <div id="10" class="list-group-item list-group-item-dark">
-                                DMF
+                            <div id="18" class="list-group-item list-group-item-dark">
+                                AMF
                             </div>
                         </div>
 
                         <div>
-                            <div id="9" class="list-group-item list-group-item-dark">
-                                DMF
+                            <div id="17" class="list-group-item list-group-item-dark">
+                                AMF
                             </div>
                         </div>
 
                         <div>
-                            <div id="8" class="list-group-item list-group-item-dark">
-                                DMF
+                            <div id="16" class="list-group-item list-group-item-dark">
+                                AMF
                             </div>
                         </div>
                     </div>
 
                     <!-- Seventh Row -->
-
-                    <div class="row pt-3 d-flex justify-content-between mx-1">
+                    <div class="row pt-3 d-flex justify-content-center">
                         <div>
-                            <div id="7" class="list-group-item list-group-item-dark">
-                                LB
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="6" class="list-group-item list-group-item-dark">
-                                CB
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="5" class="list-group-item list-group-item-dark">
-                                CB
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="4" class="list-group-item list-group-item-dark">
-                                CB
-                            </div>
-                        </div>
-
-                        <div>
-                            <div id="3" class="list-group-item list-group-item-dark">
-                                RB
+                            <div id="19" class="list-group-item list-group-item-dark">
+                                SS
                             </div>
                         </div>
                     </div>
 
+
                     <!-- Eight Row -->
 
-                    <div class="row pt-3 d-flex justify-content-center">
+                    <div class="row pt-3 d-flex justify-content-between mx-1">
                         <div>
-                            <div id="2" class="list-group-item list-group-item-dark">
-                                SW
+                            <div id="24" class="list-group-item list-group-item-dark">
+                                LWB
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="23" class="list-group-item list-group-item-dark">
+                                CF
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <div id="22" class="list-group-item list-group-item-dark">
+                                CF
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="21" class="list-group-item list-group-item-dark">
+                                CF
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="20" class="list-group-item list-group-item-dark">
+                                RWB
                             </div>
                         </div>
                     </div>
 
                     <!-- Ninth Row -->
 
-                    <div class="row pt-3 pb-3 d-flex justify-content-center">
+                    <div class="row pt-3 d-flex justify-content-center">
                         <div>
-                            <div id="1" class="list-group-item list-group-item-dark">
-                                GK
+                            <div id="25" class="list-group-item list-group-item-dark">
+                                ST
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+            <div class="col-2"></div>
+        </div>
 
-            <div class="col-md-4">
-
-                <h4>Setting Lapangan</h4>
-
-                <h4>Formasi</h4>
-
-                <div class="row">
-                    <div class="col-12">
-                        <select id="formation-select" class="custom-select">
-                            <option value="0">--Pilih Formasi--</option>
-                        </select>
-                    </div>
-                </div>
-                <h4>Pemain Cadangan</h4>
-                <div id="player-unselected-slot" ondragover="allowDropSubstitute(event)" ondrop="dropToSaveToSubstitute(event)" class="container overflow-auto simple-border" style="height: 200px;">
-                
-                </div>
-
-
+        <div id="player-deck" class="d-none"></div>
+            
+        <div class="col-12 mt-3">
+            <div class="form-group">
+                <label>Catatan Formasi</label>
+                <textarea style="resize: none;" class="form-control w-100"></textarea>
             </div>
         </div>
+
+        <div class="row mb-3"></div>
     </div>
 
     <script src="assets/custom/dto/player.js"></script>

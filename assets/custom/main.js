@@ -14,7 +14,7 @@ let today = new Date();
 $('.datepicker').datepicker({
     autoclose: true,
     endDate: today,
-    format: "dd-mm-yyyy"
+    format: "DD, dd MM yyyy"
 });
 
 //Substitutions Players
@@ -27,14 +27,40 @@ function dropToSaveToSubstitute(e){
     document.getElementById('player-unselected-slot').appendChild(document.getElementById(data));
 }
 
+function dropToSaveToDefault(e){
+    e.preventDefault();
+    var data = e.dataTransfer.getData("text");
+            
+    document.getElementById('player-slot').appendChild(document.getElementById(data));
+}
+
+function dropToNotAttend(e){
+    e.preventDefault();
+    var data = e.dataTransfer.getData("text");
+            
+    document.getElementById('player-not-attend-slot').appendChild(document.getElementById(data));
+}
+
+function dropToChange(e, id){
+    e.preventDefault();
+    var data = e.dataTransfer.getData("text");
+
+    document.getElementById("player-deck").appendChild(document.getElementById(data));
+    document.getElementById(id).innerHTML = data.replace("p-", "");
+}
+
 //Enable Drag 
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+
+function dragPlayer(ev, remark) { ev.dataTransfer.setData("text", "p-"+ev.target.innerHTML); }
+
+function dragPlayerEnd(ev, remark){ ev.innerHTML = remark; }
 
 //Join Player and their positions
 player.forEach(function (e, v) {
     var position = positions.filter((x) => { return x.id == e.position });
 
-    htmlString = '<div id="p-'+ e.backNumber +'" draggable="true" ondragstart="drag(event)" class="list-group-item list-group-item-dark d-flex justify-content-between mt-2">' +
+    htmlString = '<div id="p-'+ e.backNumber +'" draggable="true" ondragstart="drag(event)" class="list-group-item list-group-item-primary d-flex justify-content-between mt-2">' +
         '<span class="font-weight-bold">' + e.name + '</span>' +
         '<div><span class="font-weight-bold">' + e.backNumber + ' &nbsp;</span>' +
         '<span class="badge badge-' + position[0].badge + '"> ' + position[0].positionName + ' </span></div></div>';
@@ -65,6 +91,7 @@ formationSelect.onchange = function(e){
 for(let i = 1; i<= 25; i++){
     document.getElementById(i).addEventListener("ondragover", function(e){
         e.preventDefault();
+        console.log(i);
     });
 
     document.getElementById(i).addEventListener("ondrop", function(e){
